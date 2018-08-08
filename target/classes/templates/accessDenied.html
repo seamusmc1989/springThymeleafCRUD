@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Spring Boot Thymeleaf boilerplate</title>
+<link rel=icon th:href="@{/images/demoLogo.png}"  >
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<script	type="text/javascript" th:src="@{/css/jquery.min.js}"></script>
+<script	type="text/javascript" th:src="@{/css/bootstrap.min.js}"></script>
+
+<script>
+    $( document ).ready(function() {
+
+        
+        $(".updatePassword" ).click(function() {
+			
+			var id = $(this).attr('id');
+			var newPath = "/userDemo/admin/updatePassword/" + id;
+			
+			//var url = "../" + newPath;
+			$(location).attr('href',url);
+
+        });
+
+        $("#homeBtn" ).click(function() {
+            var newPath = "/userDemo/admin/allCars";
+            $(location).attr('href',newPath);
+        });
+        
+        
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-custom">
+        <div class="navbar-header">
+          <img th:src="@{/images/demoLogo.png}" class="sideLogo img-responsive"  alt="Logo" />
+        </div>
+        <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav paddingTop" style="float: right">
+			<li class="centerText">
+				Welcome  <span sec:authentication="name"></span> &nbsp;
+			</li>
+			<li>
+				<button class="btn btn-primary" id="homeBtn" type="button">Home</button>
+				&nbsp;
+			</li>
+         <li>
+			<form th:action="@{/logout}" method="get">
+				<button class="btn btn-primary" type="Submit">Logout</button>
+ 			</form>
+ 		 </li>
+        </ul>
+        </div>
+    </div>
+
+	<div class="container">
+		<div class="row">
+		     <div class="col-xs-1 col-md-1">
+		       <p>&nbsp;</p>
+		     </div>
+		     <div class="col-xs-10 col-md-10">
+		     
+		     <h1 class="defaultHeader">Access Denied</h1>
+		     <p>
+		     You don't have permissions to access this page
+		     </p>
+		      		       	       
+		     </div>
+		     <div class="col-xs-1 col-md-1">		     
+		       <p>&nbsp;</p>
+		     </div>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

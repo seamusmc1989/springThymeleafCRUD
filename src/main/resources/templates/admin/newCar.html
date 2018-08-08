@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Spring Boot Thymeleaf boilerplate</title>
+<link rel=icon th:href="@{/images/demoLogo.png}"  >
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/multiselect.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<script	type="text/javascript" th:src="@{/css/jquery.min.js}"></script>
+<script	type="text/javascript" th:src="@{/css/bootstrap.min.js}"></script>
+
+<script	type="text/javascript" th:src="@{/css/multiselect.js}"></script>
+
+<script type="text/javascript">
+
+    $( document ).ready(function() {
+        
+        $("#cancelNew" ).click(function() {
+        	var url = "/userDemo/admin/allCars";
+			$(location).attr('href',url);
+			
+        });
+        
+        $('.multiselect-ui').multiselect({
+	        includeSelectAllOption: true
+	    });
+
+        $("#homeBtn" ).click(function() {
+            var newPath = "/userDemo/admin/allCars";
+            $(location).attr('href',newPath);
+        });
+        
+    });
+</script>
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-custom">
+        <div class="navbar-header">
+          <img th:src="@{/images/demoLogo.png}" class="sideLogo img-responsive"  alt="Logo" />
+        </div>
+        <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav paddingTop" style="float: right">
+			<li>
+				Welcome  <span sec:authentication="name"></span> &nbsp;
+			</li>
+			<li>
+				<button class="btn btn-primary" id="homeBtn" type="button">Home</button>
+				&nbsp;
+			</li>
+			<li>
+			<form th:action="@{/logout}" method="get">
+				<button class="btn btn-primary" type="Submit">Logout</button>
+ 			</form>
+ 		 </li>
+        </ul>
+        </div>
+    </div>
+
+	<div class="container">
+		<div class="row">
+		     <div class="col-xs-3 col-md-3">
+		       <p>&nbsp;</p>
+		     </div>
+		     <div class="col-xs-6 col-md-6">
+		     
+		     <p>
+		     <span class="admin-message-text" th:text="${successMessage}"></span>
+		     </p>
+		     
+		     <p>
+		     Add a New Car
+		     </p>		     
+		     
+		     <form id="mainForm" autocomplete="off" action="#" th:action="@{/admin/newCar}"
+					th:object="${car}" method="POST" class="form-horizontal" role="form">
+					
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+					    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
+					</div>
+
+
+				 <!--this.make = make;-->
+				 <!--this.model = model;-->
+				 <!--this.engine = engine;-->
+				 <!--this.transmission = transmission;-->
+
+					<input type="hidden" th:field="*{id}" class="form-control" />
+
+					<label class="titleForm">Make</label>
+					<input type="text" th:field="*{make}" class="form-control" />
+					<span class="alert-danger"  th:if="${#fields.hasErrors('make')}" th:errors="*{make}"></span>
+
+					<label class="titleForm">Model</label>
+					<input type="text" th:field="*{model}" class="form-control" />
+					<span class="alert-danger"  th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+
+				 	<label class="titleForm">Engine</label>
+				 	<input type="text" th:field="*{engine}" class="form-control" />
+				 	<span class="alert-danger"  th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></span>
+
+				 	<label class="titleForm">Transmission</label>
+				 	<input type="text" th:field="*{transmission}" class="form-control" />
+				 	<span class="alert-danger"  th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}"></span>
+
+				 <!--<p>&nbsp;</p>-->
+
+
+
+					<!--<label class="titleForm">Title</label>-->
+					<!--<input type="text" th:field="*{title}" class="form-control" />-->
+					<!--<span class="alert-danger"  th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>-->
+					<!--<p>&nbsp;</p>-->
+					<!--<label class="titleForm">FirstName</label>-->
+					<!--<input type="text" th:field="*{firstName}" class="form-control" />-->
+					<!--<span class="alert-danger"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>-->
+					<!--<p>&nbsp;</p>-->
+					<!--<label class="titleForm">LastName</label>-->
+					<!--<input type="text" th:field="*{lastName}" class="form-control" />-->
+					<!--<span class="alert-danger"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>-->
+					<!--<p>&nbsp;</p>-->
+					<!--<label class="titleForm">Group</label>-->
+					<!--<input type="text" th:field="*{group}" class="form-control" />-->
+					<!--<span class="alert-danger"  th:if="${#fields.hasErrors('group')}" th:errors="*{group}"></span>-->
+					<!--<p>&nbsp;</p>-->
+					<!--<label class="titleForm">Password</label>-->
+					<!--<input type="text" th:field="*{password}" class="form-control" />-->
+					<!--<span class="alert-danger"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
+					<!--<input type="hidden" th:field="*{activeInd}" class="form-control" />-->
+					<!--<p>&nbsp;</p>-->
+					<!--<label class="titleForm">Roles</label>-->
+					<!--<div class="form-group">-->
+					        <!--<select th:field="*{rolesString}" id="rolesString" class="multiselect-ui form-control" multiple="multiple">-->
+								<!--<option value="REG">REG</option>-->
+								<!--<option value="ADMIN">ADMIN</option>-->
+								<!--<option VALUE="SUPER">SUPER</option>-->
+							<!--</select>-->
+							<!--<p>&nbsp;</p>-->
+					<!--</div>-->
+
+
+
+										
+					<div class="text-center">
+				        <button type="submit" class="btn btn-primary" >Insert</button>
+				        <button type="button" class="btn btn-primary" id="cancelNew" >Cancel</button>
+			    	</div>
+				</form>   
+  	       
+		     </div>
+		     <div class="col-xs-3 col-md-3">		     
+		       <p>&nbsp;</p>
+		     </div>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

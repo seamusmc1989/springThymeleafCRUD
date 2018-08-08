@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<title>Spring Boot Thymeleaf boilerplate</title>
+<link rel=icon th:href="@{/images/demoLogo.png}"  >
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<script	type="text/javascript" th:src="@{/css/jquery.min.js}"></script>
+<script	type="text/javascript" th:src="@{/css/bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.css}" />
+<script	type="text/javascript" th:src="@{/css/jquery-1.12.4.js}"></script>
+<script	type="text/javascript" th:src="@{/css/jquery-ui.js}"></script>
+
+  <script>
+    $( document ).ready(function() {
+        
+        $("#addCar" ).click(function() {
+        	var url = "../admin/newCar";
+			$(location).attr('href',url);
+			
+        });
+        
+        $(".editCar" ).click(function() {
+
+            console.log("editCar clicked");
+			var id = $(this).attr('id');
+			var newPath = "admin/updateCar/" + id;
+			
+			var url = "../" + newPath; 
+			$(location).attr('href',url);
+
+        });
+
+        $("#dialog").dialog({
+         autoOpen: false,
+         modal: true,
+            buttons : {
+              "Confirm" : function() {
+
+                  var carId = $("#carId").val();
+                  console.log("carId is: " + carId);
+
+                  $.get( "/userDemo/admin/deleteCar/" + carId, function( data ) {
+            		  if(data == "Car successfully deleted")
+            			  {
+            			  	$("#rowId" + carId).remove();
+            			  }
+            		});
+            	
+            	$(this).dialog("close");
+              },
+              "Cancel" : function() {
+                $(this).dialog("close");
+              }
+            }
+          });
+        
+        $(".deleteCar" ).click(function() {
+			
+            $("#dialog").dialog("open");			
+			var id = $(this).attr('id');
+
+
+			$("#carId").val(id);
+			var carMake = $("#carMake" + id).text();
+            var carModel = $("#carModel" + id).text();
+
+            console.log('carMake and model is: ' + carMake + carModel);
+             $("#deleteInfoSpan").text(carMake + ' ' + carModel);
+			
+        });
+
+        $(".updatePassword" ).click(function() {
+
+            var id = $(this).attr('id');
+            var newPath = "admin/updatePassword/" + id;
+
+            var url = "../" + newPath;
+            $(location).attr('href',url);
+
+        });
+        
+        
+        
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-custom">
+        <div class="navbar-header">
+          <img th:src="@{/images/demoLogo.png}" class="sideLogo img-responsive"  alt="Logo" />
+        </div>
+        <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav paddingTop" style="float: right">
+			<li>
+				Welcome  <span sec:authentication="name"></span> &nbsp;
+			</li>
+			<li>
+			<form th:action="@{/logout}" method="post">
+				<button class="btn btn-primary" type="Submit">Logout</button>
+ 			</form>
+ 		 </li>
+        </ul>
+        </div>
+    </div>
+
+<div id="dialog" title="Delete Confirmation Required">
+  Are you sure you want to delete car: <span id="deleteInfoSpan"></span>?
+</div>
+
+	<div class="container">
+		<div class="row">
+		     <div class="col-xs-1 col-md-1">
+		       <p>&nbsp;</p>
+		     </div>
+		     <div class="col-xs-10 col-md-10">
+		     
+		     <p>
+				 All Cars
+				 <div sec:authorize="hasAuthority('SUPER')">
+					 <button type="button" id="addCar" class="btn btn-primary">Add Car</button>
+				 </div>
+			 	<button th:id="${userId}" class="btn btn-primary updatePassword" type="button">Update Password</button>
+
+			 </p>
+			
+			<div>
+			<div class="row headerStyle">
+				<div class="col-md-2"><b>Make</b></div>
+				<div class="col-md-2"><b>Model</b></div>
+				<div class="col-md-2"><b>Engine</b></div>
+				<div class="col-md-2"><b>Transmission</b></div>
+				<div class="col-md-4"><b>Action</b></div>
+			</div>
+			        
+			</div>
+			
+				<input type="hidden" id="userId" />
+				<input type="hidden" id="carId" />
+
+				 <div class="row el" th:each="car:${allCars}" th:id="'rowId' + ${car.id}" >
+
+				<span class="col-md-2" th:text="${car.make}" th:id="'carMake' + ${car.id}"></span>
+	            <span class="col-md-2" th:text="${car.model}"th:id="'carModel' + ${car.id}"></span>
+				<span class="col-md-2" th:text="${car.engine}"></span>
+				<span class="col-md-2" th:text="${car.transmission}"></span>
+				<span class="col-md-4">
+
+					<span sec:authorize="hasAuthority('ADMIN')">
+					<button type="button" th:id="${car.id}"  class="editCar btn btn-primary" >Edit Car</button>
+					</span>
+
+					<span sec:authorize="hasAuthority('SUPER')">
+					<button type="button" th:id="${car.id}" class="deleteCar btn btn-primary" >Delete Car</button>
+					</span>
+
+				</span>
+			</div>
+			        
+			</div>
+			
+			 </div>
+		     <div class="col-xs-1 col-md-1">		     
+		       <p>&nbsp;</p>
+		     </div>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+</html>

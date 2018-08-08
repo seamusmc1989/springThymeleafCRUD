@@ -1,0 +1,109 @@
+
+#procTitle {
+	height: 70px;
+}
+
+
+.marginBottom {
+	margin-bottom: 10px !important;
+}
+
+.mainFont {
+	color: #4f94e9;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.mainFontLarge {
+	color: #4f94e9;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.error {
+	color: red !important;
+	font-weight: bold;
+}
+
+.success {
+	color: green !important;
+	font-weight: bold;
+}
+
+.form-group {
+	margin-right: 0px!Important;
+	margin-left: 0px!Important;
+}
+
+.el:nth-of-type(odd) {
+	background-color: #efefef;
+}
+
+.el:nth-of-type(even) {
+	background-color: #ffffff;
+}
+
+div .headerStyle
+{	
+	font-weight: 700;
+    color: #337aff;
+    font-family: 'Arial' !important;
+    font-size: 16px !important;
+}
+
+.titleForm
+{	
+	font-weight: 700;
+    color: #337aff;
+    font-family: 'Arial' !important;
+    font-size: 16px !important;
+}
+
+.borderAll {
+	border-style: solid;
+    border-width: 1px;	
+}
+
+.paddingAll {
+	padding: 5px;
+}
+
+.admin-message-text {
+	font-style: normal;
+	font-size: 22px;
+	color: #004080;
+	padding: 7px;
+}
+
+.navbar-custom .navbar-nav > .active > a {
+    color: #ffffff;
+    background-color:transparent;
+    
+}
+
+.wrap {
+    width: 100%;
+    overflow:auto;
+}
+
+.paddingTop {
+ 	padding-top: 20px;	
+}
+
+.paddingBottom {
+	padding-bottom: 10px;
+}
+
+
+.sideLogo {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.defaultHeader {
+    color: #4f94e9;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
